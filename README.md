@@ -1,6 +1,6 @@
 # Complex SQL Query for a MySQL Database 
 
-![CI](https://github.com/aghakishiyeva/ids706-mini-project-6/actions/workflows/CRUD.yml/badge.svg)
+![CI](https://github.com/aghakishiyeva/ids706-mini-project-6/actions/workflows/main.yml/badge.svg)
 
 
 This is a Python project that demonstrates how to create a script for executing a complex SQL query on a MySQL database. The project includes a script that connects to a MySQL database and runs a complex SQL query, which involves joins, aggregation, and sorting operations. The query retrieves specific information from the database and provides detailed insights based on the data. Additionally, the project includes tests to verify the functionality of the query.
