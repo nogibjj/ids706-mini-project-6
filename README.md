@@ -7,7 +7,7 @@ This is a Python project that demonstrates how to create a script for executing 
 
 
 ## Prerequisites
-
+ 
 Before running this project, make sure you have the following:
 
 * A MySQL database instance accessible from your Python environment.
@@ -19,7 +19,7 @@ Follow these steps to set up and run the project:
 1. Clone this repository to your local machine:
 
    ```bash
-   git clone https://github.com/aghakishiyeva/ids706-mini-project-6.git
+   git clone https://github.com/nogibjj/ids706-mini-project-6.git
    ```
 
 2. Navigate to the project directory:
