@@ -1,4 +1,4 @@
-# Complex SQL Query for a MySQL Database
+# Complex SQL Query for a MySQL Database 
 
 ![CI](https://github.com/aghakishiyeva/ids706-mini-project-6/actions/workflows/CRUD.yml/badge.svg)
 
