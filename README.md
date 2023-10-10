@@ -5,6 +5,22 @@
 
 This is a Python project that demonstrates how to create a script for executing a complex SQL query on a MySQL database. The project includes a script that connects to a MySQL database and runs a complex SQL query, which involves joins, aggregation, and sorting operations. The query retrieves specific information from the database and provides detailed insights based on the data. Additionally, the project includes tests to verify the functionality of the query.
 
+### Explanation of the query
+
+* ```SELECT u.name, u.age, SUM(o.total_amount) AS total_order_amount```
+This part specifies what information we want to retrieve. We are selecting the name and age from the "users" table and calculating the total order amount from the "orders" table. The AS total_order_amount renames the calculated total as "total_order_amount."
+
+* ```FROM users u```
+Here, we specify that we want to retrieve data from the "users" table and give it the alias "u" to make the query more readable.
+
+* ```LEFT JOIN orders o ON u.id = o.user_id```
+This part performs a left join between the "users" table (aliased as "u") and the "orders" table (aliased as "o"). It connects rows in the "users" table with matching rows in the "orders" table based on the "id" column in "users" and the "user_id" column in "orders."
+
+* ```GROUP BY u.id, u.name, u.age```
+After joining the tables, we group the results based on the columns "id," "name," and "age" from the "users" table. This means that we'll get one row for each unique combination of these columns.
+
+* ```ORDER BY u.age```
+Finally, we order the grouped results by the "age" column in ascending order. This means the results will be sorted from the youngest to the oldest.
 
 ## Prerequisites
  
