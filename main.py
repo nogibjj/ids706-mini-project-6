@@ -9,46 +9,51 @@ PASSWORD = os.environ.get('DB_PASSWORD')
 def get_connection():
     return mysql.connector.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD)
 
-# CREATE
-def CREATE():
+# CREATE TABLES
+def create_tables():
     with get_connection() as conn:
         cursor = conn.cursor()
-        cursor.execute('''CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255))''')
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS users (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(255),
+                age INT
+            )
+        """)
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS orders (
+                order_id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT,
+                total_amount DECIMAL(10, 2),
+                order_date DATE
+            )
+        """)
         conn.commit()
 
-def add_user(name):
+# INSERT SAMPLE DATA
+def insert_sample_data():
     with get_connection() as conn:
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO users (name) VALUES (%s)", (name,))
+        cursor.execute("INSERT INTO users (name, age) VALUES ('Alice', 28), ('Bob', 32)")
+        cursor.execute("INSERT INTO orders (user_id, total_amount, order_date) VALUES (1, 100.50, '2023-01-15'), (2, 75.20, '2023-01-16')")
         conn.commit()
 
-# READ
-def READ():
+def complex_sql_query():
     with get_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM users")
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("""
+            SELECT u.name, u.age, SUM(o.total_amount) AS total_order_amount
+            FROM users u
+            LEFT JOIN orders o ON u.id = o.user_id
+            GROUP BY u.id, u.name, u.age
+            ORDER BY u.age;
+        """)
         return cursor.fetchall()
 
-# UPDATE
-def UPDATE(user_id, new_name):
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("UPDATE users SET name=%s WHERE id=%s", (new_name, user_id))
-        conn.commit()
-      
-# DELETE
-def DELETE(user_id):
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("DELETE FROM users WHERE id=%s", (user_id,))
-        conn.commit()
-
-# DROP (for test purposes)
-def DROP():
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("DROP TABLE IF EXISTS users")
-        conn.commit()
-
 if __name__ == "__main__":
-    CREATE()
+    create_tables()
+    insert_sample_data()
+    
+    results = complex_sql_query()
+    for row in results:
+        print(row)
